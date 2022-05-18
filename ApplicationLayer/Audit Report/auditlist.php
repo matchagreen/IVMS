@@ -56,7 +56,7 @@ $audit = new auditcontroller();
 	<div class="header" >
 	<h1>AUDIT REPORT</h1>
 	</div>
-	<!-- SAMPAI SINI -->
+	<!-- SAMPAI SINI OK-->
 </head>
 <body>
 	<!-- 2. NAVIGATION BAR-->
