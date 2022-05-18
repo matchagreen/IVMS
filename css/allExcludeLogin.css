@@ -1,0 +1,59 @@
+/*NAVIGATION BAR*/
+ul {
+		  list-style-type: none;
+		  margin: 0;
+		  padding: 0;
+		  overflow: hidden;
+		  background-color: #333;
+		  font-family: cooper black;
+		}
+
+		li {
+		  float: left;
+		}
+
+		li a {
+		  display: block;
+		  color: white;
+		  text-align: center;
+		  padding: 14px 20px;
+		  text-decoration: none;
+		}
+
+		li a:hover:not(.active) {
+		  background-color: #B6D5D5;
+		}
+
+		.active {
+		  background-color: #7EDADB;
+		}
+body{ background-color: #7EDADB }
+.header{
+		/*font*/
+		color:white;  font-family:Stencil; font-size: 26px; text-align: center;
+		/*display*/
+		background-color: #508585;
+		height: 120px;
+		padding: 2px 25px 7px;
+	}
+.footer{
+		/*display*/
+		background-color: #508585;
+		height: 120px;
+		padding: 2px 25px 7px;
+	}
+.button {
+  background-color: #508585;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Myriad Pro Light;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+/*UNTUK TAJUK MODULE*/
+h2{font-family: Myriad Pro Light}
