@@ -31,7 +31,6 @@ $audit = new auditcontroller();
 		padding-bottom: 10px;
 	}
 
-
 		.size{
 			width:50%; 
 			height: 100px
