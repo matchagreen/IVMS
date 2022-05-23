@@ -1,12 +1,18 @@
 <?php
-require_once '../../BusinessServiceLayer/controller/BookController.php';
+require_once '../../libs/database.php';
 
-$add = new controller(); //CHECK
+$BookingID=$_GET['update'];
 
-if(isset($_POST['Submit'])){
-   
-    $add->add();
-	
+if(isset($_POST['Submit'])){ 
+
+$id = $_POST['id'];
+$ItemID = $_POST['ItemID'];
+$ItemQuantity = $_POST['ItemQuantity'];
+$DateBooking = $_POST['DateBooking'];
+$BookingTime = $_POST['BookingTime'];
+$PickUpDate = $_POST['PickUpDate'];
+$sql=("UPDATE booking SET BookingID='$BookingID',ItemID='$ItemID',id='$id',ItemQuantity='$ItemQuantity',DateBooking='$DateBooking',BookingTime='$BookingTime',PickUpDate='$.PickUpDate' WHERE BookingID=$BookingID") or die($mysqli->error());
+	DB::run($sql);
 }
 ?>
 
@@ -228,19 +234,6 @@ input,select{
 <br>
 <table>
 	<form name="frmCntact" method="post" action="">
-	<tr>
-		<p>
-		<td>
-		<label for="BookingID">Booking ID:</label>
-		&emsp;
-		&emsp;
-		&emsp;
-		</td>
-		<td>
-		<input type="text" name="BookingID" id="BookingID">
-		</td>
-		</p>
-	</tr>
 
 	<tr>
 		<p>
@@ -335,4 +328,3 @@ input,select{
 </div>
 </body>
 </html>
-

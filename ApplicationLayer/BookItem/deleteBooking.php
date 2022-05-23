@@ -1,15 +1,20 @@
 <?php
-require_once '../../BusinessServiceLayer/controller/BookController.php';
+require_once '../../libs/database.php';
 
-$view = new controller();	
 
+if(isset($_GET['delete'])){
+	$id = $_GET['delete'];
+	$sql=("DELETE FROM booking WHERE BookingID = $id") or die($mysqli->error());
+	DB::run($sql);
+}
 ?>
+
 
 
 <!DOCTYPE html>
 <html>
 <style type="text/css">
-	<style>
+	<style>s
 	table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -176,57 +181,7 @@ h2{font-family: Myriad Pro Light;}
 	<center>
 		<button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/BookItem.php">View Item</button>
 		<button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/AddBookForm.php">Add Booking</a></button>
-    <button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/ViewStatusBooking.php">View Booking </a></button>
+    <button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/ViewStatusBooking.php" target="_blank">View Booking </a></button>
   </center>
 		  <br><br>
-			<center><table>
-			<tr class="center">
-				<tr>
-			
-				</tr>
-				<h2 style="text-align: center;">Booking status</h2>
-				<br><br>
-				<th>BookingID</th>
-				<th>Item ID</th>
-				<th>ID</th>
-				<th>Item Quantity</th>
-				<th>Date Booking</th>
-				<th>Booking Time</th>
-				<th>Pickup Date</th>
-				
-			</tr>
-			<?php 
-
-$connection = mysqli_connect("localhost","root","","mydatabase");
-
-if(!$connection)
-{
-	echo "Database connection faild...";
-}
-
-$retrive = mysqli_query($connection, "SELECT * FROM booking ");
-$row= mysqli_fetch_array($retrive);
-
-?>
-			<?php
-                while($row = mysqli_fetch_array($retrive))
-                {
-                    ?>
-                    <tr>
-                    <td><?= $row['BookingID'];?></td>
-                    <td><?= $row['ItemID'];?></td>
-										<td><?= $row['id'];?></td>
-                    <td><?= $row['ItemQuantity'];?></td>
-                    <td><?= $row['DateBooking'];?></td>
-                    <td><?= $row['BookingTime'];?></td>
-                    <td><?= $row['PickUpDate'];?></td>
-                    </tr>
-                <?php
-                }
-            
-                ?>
-		</table><center>	
-			
-</head>
-</html>
-
+		  
