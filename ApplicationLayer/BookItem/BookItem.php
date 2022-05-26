@@ -170,7 +170,7 @@ li a:hover:not(.active) {
 	<!---------------- Button For Page Add and View ------->
 	<br><br>
 	<center><button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/AddBookForm.php">Add Booking</a></button>
-          <button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/ViewStatusBooking.php" target="_blank">View Booking </a></button></center>
+          <button class="btn active"><a href="http://localhost/IVMS/ApplicationLayer/BookItem/ViewStatusBooking.php">View Booking </a></button></center>
          <br><br>
 
 <!--------- View Item List ---------->
