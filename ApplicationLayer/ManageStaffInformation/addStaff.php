@@ -1,8 +1,9 @@
 <?php
 require_once '../../BusinessServiceLayer/controller/staffController.php';
-
+if (!isset($_SESSION)) {
+	session_start();
+}
 $staff = new staffController();
-
 //Call add function
 if (isset($_POST['add'])) {
 	$staff->add();
@@ -94,32 +95,75 @@ if (isset($_POST['add'])) {
 						<tr>
 							<th>Name</th>
 							<td width="100%"><input type="text" name="name" placeholder="enter name" required></td>
+
 							<td rowspan="8"><i class="fa fa-user" style="font-size: 150px; padding-left: 30%;"></i>
 								<div style="text-align: right; padding-left: 2px">
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['nameErr']; ?></p>
+							</td>
 						</tr>
 						<tr>
 							<th>ID Number</th>
 							<td><input width="100%" type="text" name="id" placeholder="enter id number" required></td>
 						</tr>
 						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['idErr']; ?></p>
+							</td>
+						</tr>
+						<tr>
 							<th>Phone Number</th>
 							<td><input type="text" name="phone" placeholder="enter phone number" required></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['phoneErr']; ?></p>
+							</td>
 						</tr>
 						<tr>
 							<th>Address</th>
 							<td><input type="text" name="address" placeholder="enter address" required></td>
 						</tr>
 						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['addressErr']; ?></p>
+							</td>
+						</tr>
+						<tr>
 							<th>Email</th>
 							<td><input type="text" name="email" placeholder="enter email" required></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['emailErr']; ?></p>
+							</td>
 						</tr>
 						<tr>
 							<th>Office Tel</th>
 							<td><input type="text" name="officeTel" placeholder="enter office tel" required></td>
 						</tr>
 						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['officeTelErr']; ?></p>
+							</td>
+						</tr>
+						<tr>
 							<th>Office Fax</th>
-							<td><input type="text" name="officeFax" placeholder="enter office tax" required></td>
+							<td><input type="text" name="officeFax" placeholder="enter office fax" required></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['officeFaxErr']; ?></p>
+							</td>
 						</tr>
 						<tr>
 							<th>Group</th>
@@ -127,9 +171,19 @@ if (isset($_POST['add'])) {
 						</tr>
 						<tr>
 							<td></td>
+							<td>
+								<p style="color: red"><?php echo $_SESSION['groupsListErr']; ?></p>
+							</td>
 						</tr>
 						<tr>
 							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<p style="color: green"><?php echo $_SESSION['success']; ?>
+								</p>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="3" style="text-align: center">
