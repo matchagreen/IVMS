@@ -1,8 +1,6 @@
 <?php
 require_once '../../BusinessServiceLayer/model/staffModel.php';
-if (!isset($_SESSION)) {
-	session_start();
-}
+
 class staffController
 {
 
@@ -20,12 +18,13 @@ class staffController
 
 		$nameErr = $idErr = $groupsListErr = $officeFaxErr = $officeTelErr = $emailErr = $addressErr = $phoneErr = "";
 		$name = $id = $groupsList = $officeFax = $officeTel = $email = $address = $phone = "";
+		$_SESSION['success'] = $_SESSION['nameErr'] = $_SESSION['idErr'] = $_SESSION['groupsListErr'] = $_SESSION['officeFaxErr'] = $_SESSION['officeTelErr'] = $_SESSION['emailErr'] = $_SESSION['addressErr'] = $_SESSION['phoneErr'] = '';
+
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-
-
 			$add = new staffModel();
+
 			if (empty($_POST["name"])) {
 				$nameErr = "Name is required";
 			} else {
@@ -35,10 +34,6 @@ class staffController
 					$nameErr = "Only alphabets and white space are allowed";
 				}
 			}
-
-			//get post records
-			// $name = $_POST['name'];
-
 			if (empty($_POST["id"])) {
 				$idErr = "ID is required";
 			} else {
@@ -48,7 +43,6 @@ class staffController
 					$idErr = "No special characters are allowed.";
 				}
 			}
-
 			if (empty($_POST["phone"])) {
 				$phoneErr = "Phone Number is required";
 			} else {
@@ -62,7 +56,6 @@ class staffController
 					$phoneErr = "Must not contain more than 12 digits.";
 				}
 			}
-
 			$address = $_POST['address'];
 			if (empty($_POST["address"])) {
 				$addressErr = "Address is required";
@@ -73,8 +66,6 @@ class staffController
 					$addressErr = "No special characters are allowed.";
 				}
 			}
-
-
 			if (empty($_POST["email"])) {
 				$emailErr = "Email is required.";
 			} else {
@@ -84,7 +75,6 @@ class staffController
 					$emailErr = "Invalid email format";
 				}
 			}
-
 			if (empty($_POST["officeTel"])) {
 				$officeTelErr = "Office Telephone Number is required.";
 			} else {
@@ -98,9 +88,6 @@ class staffController
 					$officeTelErr = "Must not contain more than 12 digits.";
 				}
 			}
-
-			$officeFax = $_POST['officeFax'];
-
 			if (empty($_POST["officeFax"])) {
 				$officeFaxErr = "Office fax is required.";
 			} else {
@@ -114,9 +101,6 @@ class staffController
 					$officeFaxErr = "Must not contain more than 12 digits.";
 				}
 			}
-
-
-
 			if (empty($_POST["groupsList"])) {
 				$groupsListErr = "Group List is required";
 			} else {
@@ -129,15 +113,6 @@ class staffController
 
 			if ($idErr == "" && $nameErr == "" && $groupsListErr == ""  && $officeFaxErr == ""  && $officeTelErr == ""  && $emailErr == ""  && $addressErr == ""  && $phoneErr == "") {
 				$_SESSION['success'] = $name . " successfully added to the system!";
-				$_SESSION['nameErr'] = '';
-				$_SESSION['idErr'] = $idErr;
-				$_SESSION['groupsListErr'] = '';
-				$_SESSION['officeFaxErr'] = '';
-				$_SESSION['officeTelErr'] = '';
-				$_SESSION['emailErr'] = '';
-				$_SESSION['addressErr'] = '';
-				$_SESSION['phoneErr'] = '';
-
 				$req = $add->addStaff($name, $id, $phone, $address, $email, $officeTel, $officeFax, $groupsList);
 			} else {
 				$_SESSION['success'] = "Please correct the errors.";
@@ -150,29 +125,79 @@ class staffController
 				$_SESSION['addressErr'] = $addressErr;
 				$_SESSION['phoneErr'] = $phoneErr;
 			}
+
+			session_destroy();
 		}
 	}
 	//delete staff information
 	function delete()
 	{
+		function input_data3($data)
+		{
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$delete = new staffModel();
 
-		$delete = new staffModel();
-
-		$id = $_POST['id'];
-
-		$delete = new staffModel();
-		$req = $delete->deleteStaff($id);
+			$id = $_POST['id'];
+			$idErr = "";
+			if (empty($_POST["id"])) {
+				$idErr = "ID is required";
+			} else {
+				$id = input_data3($_POST["id"]);
+				// check if mobile no is well-formed  
+				if (preg_match("[\W]", $id)) {
+					$idErr = "No special characters are allowed.";
+				}
+			}
+			if ($idErr == "") {
+				$_SESSION['successMsg'] = $id . " successfully deleted from the system!";
+				$delete = new staffModel();
+				$req = $delete->deleteStaff($id);
+			} else {
+				$_SESSION['successMsg'] = "Please try again.";
+				$_SESSION['idErr'] = $idErr;
+			}
+			session_destroy();
+		}
 	}
 	//view staff information
 	function view()
 	{
 
-		$view = new staffModel();
+		function input_data4($data)
+		{
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$view = new staffModel();
 
-		$id = $_POST['id'];
+			$id = $_POST['id'];
 
-		$view = new staffModel();
-		$req = $view->viewStaff($id);
+			if (empty($_POST["id"])) {
+				$idErr = "ID is required";
+			} else {
+				$id = input_data4($_POST["id"]);
+				// check if mobile no is well-formed  
+				if (preg_match("[\W]", $id)) {
+					$idErr = "No special characters are allowed.";
+				}
+			}
+			if ($idErr == "") {
+				$view = new staffModel();
+				$req = $view->viewStaff($id);
+			} else {
+				$_SESSION['successMsg'] = "Please try again.";
+				$_SESSION['idErr'] = $idErr;
+			}
+			session_destroy();
+		}
 	}
 
 	//view admin information
@@ -189,19 +214,126 @@ class staffController
 	function edit()
 	{
 
-		$edit = new staffModel();
 
-		$name = $_POST['name'];
-		$id = $_POST['id'];
-		$phone = $_POST['phone'];
-		$address = $_POST['address'];
-		$email = $_POST['email'];
-		$officeTel = $_POST['officeTel'];
-		$officeFax = $_POST['officeFax'];
-		$groupsList = $_POST['groupsList'];
+		$nameErr = $idErr = $groupsListErr = $officeFaxErr = $officeTelErr = $emailErr = $addressErr = $phoneErr = "";
+		$name = $id = $groupsList = $officeFax = $officeTel = $email = $address = $phone = "";
+		$_SESSION['success'] = $_SESSION['nameErr'] = $_SESSION['idErr'] = $_SESSION['groupsListErr'] = $_SESSION['officeFaxErr'] = $_SESSION['officeTelErr'] = $_SESSION['emailErr'] = $_SESSION['addressErr'] = $_SESSION['phoneErr'] = '';
+
+		function input_data2($data)
+		{
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$edit = new staffModel();
+
+			if (empty($_POST["name"])) {
+				$nameErr = "Name is required";
+			} else {
+				$name = input_data2($_POST["name"]);
+				// check if name only contains letters and whitespace  
+				if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+					$nameErr = "Only alphabets and white space are allowed";
+				}
+			}
+			if (empty($_POST["id"])) {
+				$idErr = "ID is required";
+			} else {
+				$id = input_data2($_POST["id"]);
+				// check if mobile no is well-formed  
+				if (preg_match("[\W]", $id)) {
+					$idErr = "No special characters are allowed.";
+				}
+			}
+			if (empty($_POST["phone"])) {
+				$phoneErr = "Phone Number is required";
+			} else {
+				$phone = input_data2($_POST["phone"]);
+				// check if mobile no is well-formed  
+				if (!preg_match("/^[0-9]*$/", $phone)) {
+					$phoneErr = "Only numeric values are allowed.";
+				}
+				//check mobile no length should not be less and greator than 10  
+				if (strlen($phone) > 12) {
+					$phoneErr = "Must not contain more than 12 digits.";
+				}
+			}
+			$address = $_POST['address'];
+			if (empty($_POST["address"])) {
+				$addressErr = "Address is required";
+			} else {
+				$address = input_data2($_POST["address"]);
+				// check if mobile no is well-formed  
+				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $address)) {
+					$addressErr = "No special characters are allowed.";
+				}
+			}
+			if (empty($_POST["email"])) {
+				$emailErr = "Email is required.";
+			} else {
+				$email = input_data2($_POST["email"]);
+				// check that the e-mail address is well-formed  
+				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					$emailErr = "Invalid email format";
+				}
+			}
+			if (empty($_POST["officeTel"])) {
+				$officeTelErr = "Office Telephone Number is required.";
+			} else {
+				$officeTel = input_data2($_POST["officeTel"]);
+				// check if mobile no is well-formed  
+				if (!preg_match("/^[0-9]*$/", $officeTel)) {
+					$officeTelErr = "Only numeric values are allowed.";
+				}
+				//check mobile no length should not be less and greator than 10  
+				if (strlen($officeTel) > 12) {
+					$officeTelErr = "Must not contain more than 12 digits.";
+				}
+			}
+			if (empty($_POST["officeFax"])) {
+				$officeFaxErr = "Office fax is required.";
+			} else {
+				$officeFax = input_data2($_POST["officeFax"]);
+				// check if mobile no is well-formed  
+				if (!preg_match("/^[0-9]*$/", $officeFax)) {
+					$officeFaxErr = "Only numeric values are allowed.";
+				}
+				//check mobile no length should not be less and greator than 10  
+				if (strlen($officeFax) > 12) {
+					$officeFaxErr = "Must not contain more than 12 digits.";
+				}
+			}
+			if (empty($_POST["groupsList"])) {
+				$groupsListErr = "Group List is required";
+			} else {
+				$groupsList = input_data2($_POST["groupsList"]);
+				// check if mobile no is well-formed  
+				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $groupsList)) {
+					$groupsListErr = "No special characters are allowed.";
+				}
+			}
 
 
-		$edit = new staffModel();
-		$req = $edit->editStaff($name, $id, $phone, $address, $email, $officeTel, $officeFax, $groupsList);
+
+			if ($idErr == "" && $nameErr == "" && $groupsListErr == ""  && $officeFaxErr == ""  && $officeTelErr == ""  && $emailErr == ""  && $addressErr == ""  && $phoneErr == "") {
+				$edit = new staffModel();
+				$_SESSION['success'] = $name . " successfully added to the system!";
+				$req = $edit->editStaff($name, $id, $phone, $address, $email, $officeTel, $officeFax, $groupsList);
+			} else {
+				$_SESSION['success'] = "Please correct the errors.";
+				$_SESSION['nameErr'] = $nameErr;
+				$_SESSION['idErr'] = $idErr;
+				$_SESSION['groupsListErr'] = $groupsListErr;
+				$_SESSION['officeFaxErr'] = $officeFaxErr;
+				$_SESSION['officeTelErr'] = $officeTelErr;
+				$_SESSION['emailErr'] = $emailErr;
+				$_SESSION['addressErr'] = $addressErr;
+				$_SESSION['phoneErr'] = $phoneErr;
+			}
+			session_destroy();
+		}
 	}
 }

@@ -102,7 +102,9 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['nameErr']; ?></p>
+								<?php if (isset($_SESSION['nameErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['nameErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -112,7 +114,9 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['idErr']; ?></p>
+								<?php if (isset($_SESSION['idErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['idErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -122,7 +126,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['phoneErr']; ?></p>
+								
+								<?php if (isset($_SESSION['phoneErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['phoneErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -132,7 +139,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['addressErr']; ?></p>
+						
+								<?php if (isset($_SESSION['addressErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['addressErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -142,7 +152,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['emailErr']; ?></p>
+								
+								<?php if (isset($_SESSION['emailErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['emailErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -152,7 +165,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['officeTelErr']; ?></p>
+							
+								<?php if (isset($_SESSION['officeTelErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['officeTelErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -162,7 +178,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['officeFaxErr']; ?></p>
+						
+								<?php if (isset($_SESSION['officeFaxErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['officeFaxErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -172,7 +191,10 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: red"><?php echo $_SESSION['groupsListErr']; ?></p>
+							
+								<?php if (isset($_SESSION['groupsListErr'])) : ?>
+									<p style="color: red"><?php echo $_SESSION['groupsListErr']; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -181,8 +203,11 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td></td>
 							<td>
-								<p style="color: green"><?php echo $_SESSION['success']; ?>
+						
+								<?php if (isset($_SESSION['success'])) : ?>
+									<p style="color: green"><?php echo $_SESSION['success']; ?>
 								</p>
+								<?php endif; ?>
 							</td>
 						</tr>
 						<tr>
@@ -190,6 +215,8 @@ if (isset($_POST['add'])) {
 								<i class="fa fa-save"></i>
 								<input class="button" type="submit" name="add" value=" Add Staff Information ">
 							</td>
+
+							
 						</tr>
 				</form>
 				</table>
