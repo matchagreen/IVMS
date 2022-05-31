@@ -1,7 +1,8 @@
+
 <?php
 require_once '../../BusinessServiceLayer/controller/itemController.php';
 
-
+//Delete  depends on itemID//
 $sql = "DELETE FROM inventory WHERE ItemID='". $_GET['ItemID']."'";
 
 if (mysqli_query($connection, $sql)) {

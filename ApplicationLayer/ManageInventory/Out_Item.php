@@ -2,7 +2,7 @@
 require_once '../../BusinessServiceLayer/controller/itemController.php';
 
 $viewOut = new itemController();	
-
+//Barang Keluar//
 ?>
 
 <head>

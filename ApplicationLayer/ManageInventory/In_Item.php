@@ -7,7 +7,7 @@ if(isset($_POST['Add']))
 {
     $inventory->add();
 }
-
+//Barang Masuk//
 ?>
 
 <head>
