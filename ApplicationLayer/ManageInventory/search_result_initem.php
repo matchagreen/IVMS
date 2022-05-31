@@ -251,7 +251,7 @@ form.example::after {
   </ul>
 
 <!--COLUMN 1-->
- <div class="column1">
+<div class="column1">
   <div>
   <center>
     <br><br><br>
@@ -283,40 +283,46 @@ form.example::after {
     <th>SENDER NAME</th>
 	<th>TRUCK PLATE NO</th>
 	<th colspan=2>ACTION</th>
-  
   </tr> 
 </div>
-  <?php 
 
-
-$retrive = mysqli_query($connection, "SELECT ItemID, itemName, qtorder, qtreceived, unitPrice, qtreceived * unitPrice as total, location, dateOrder, 
-                        dateArrived, companyName, companyAddress, senderName, truckPlateNo FROM inventory ORDER BY dateArrived DESC");
-?>
-			<?php
-                while($row = mysqli_fetch_array($retrive))
-                {
-                    ?>
-                    <tr>
-                    <td><?= $row['ItemID'];?></td>
-                    <td><?= $row['itemName'];?></td>
-					<td><?= $row['qtorder'];?></td>
-                    <td><?= $row['qtreceived'];?></td>
-					<td><?= $row['unitPrice'];?></td>
-                    <td><?= $row['total'];?></td>
-					<td><?= $row['location'];?></td>
-                    <td><?= $row['dateOrder'];?></td>
-					<td><?= $row['dateArrived'];?></td>
-                    <td><?= $row['companyName'];?></td>
-					<td><?= $row['companyAddress'];?></td>
-                    <td><?= $row['senderName'];?></td>
-					<td><?= $row['truckPlateNo'];?></td>
-					<td><a href="editItem.php?ItemID=<?php echo $row['ItemID']; ?>">Edit</a></td>
-          <td><a href="delete_Item.php?ItemID=<?php echo $row['ItemID']; ?>" onclick="return confirm('Are you sure you want to delete this row?');">Delete</a></td>
-                    </tr>
-                <?php
-                }
-            
-                ?>
+<?php
+                        $query = $_POST["output"];
+                        $retrieve = mysqli_query($connection, "SELECT ItemID, itemName, qtorder, qtreceived, unitPrice, qtreceived * unitPrice as total, location, dateOrder, 
+                        dateArrived, companyName, companyAddress, senderName, truckPlateNo FROM inventory
+                        WHERE inventory.itemName LIKE '%".$query."%'") or die(mysqli_error($connection));
+                    
+                        
+                        if(mysqli_num_rows($retrieve) > 0){ // if one or more rows are returned do following
+                            while($row = mysqli_fetch_array($retrieve)){
+                                echo "<tr>";
+                                    echo "<td>".$row['ItemID']."</td>";
+                                    echo "<td>".$row['itemName']."</td>";
+                                    echo "<td>".$row['qtorder']."</td>";
+                                    echo "<td>".$row['qtreceived']."</td>";
+                                    echo "<td>".$row['unitPrice']."</td>";
+                                    echo "<td>".$row['total']."</td>";
+                                    echo "<td>".$row['location']."</td>";
+                                    echo "<td>".$row['dateOrder']."</td>";
+                                    echo "<td>".$row['dateArrived']."</td>";
+                                    echo "<td>".$row['companyName']."</td>";
+                                    echo "<td>".$row['companyAddress']."</td>";
+                                    echo "<td>".$row['senderName']."</td>";
+                                    echo "<td>".$row['truckPlateNo']."</td>";
+                                    echo "</td>";
+                                    echo "<td>";
+                                        echo '<a href="editItem.php?ItemID='.$row['ItemID'].'">Edit</a>';
+                                        echo "</td>";
+                                    echo "<td>";
+                                        echo '<a href="delete_Item.php?ItemID='.$row['ItemID'].'">Delete</a>';
+                                        echo "</td>";
+                                echo "</tr>";
+                            }
+                        }
+                        else{ // if there is no matching rows 
+                            echo "No results found";
+                        }
+                        ?>
                </table>
 
 <div> 
