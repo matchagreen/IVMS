@@ -4,7 +4,31 @@ require_once '../../BusinessServiceLayer/controller/AuditReportController.php';
 $audit = new auditcontroller();	
 
 ?>
+<?php
 
+if(isset($_POST['search']))
+{
+    $valueToSearch = $_POST['valueToSearch'];
+    // search in all table columns
+    // using concat mysql function
+    $query = "SELECT * FROM `auditreport` WHERE CONCAT(`Audit_id`, `report_id`, `Audit_name`, `Audit_date`,`Audit_result`) LIKE '%".$valueToSearch."%'";
+    $search_result = filterTable($query);
+    
+}
+ else {
+    $query = "SELECT * FROM `auditreport`";
+    $search_result = filterTable($query);
+}
+
+// function to connect and execute the query
+function filterTable($query)
+{
+    $connect = mysqli_connect("localhost", "root", "", "mydatabase");
+    $filter_Result = mysqli_query($connect, $query);
+    return $filter_Result;
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -86,7 +110,9 @@ $audit = new auditcontroller();
 <!--FORM-->
 <!--TO RETRIEVE DATA-->
 <form action="" method="post">
-	
+<input type="text" name="valueToSearch" placeholder="Value To Search" ><br>
+<input type="submit" name="search" value="Filter"><br>
+</form>
 	<table>
 		<tr>
 				<td style="text-align: center; background-color: black; color:white;">Audit ID</td>
@@ -96,35 +122,18 @@ $audit = new auditcontroller();
 				<td style="text-align: center;background-color: black; color:white;">Status</td>
 				<td style="text-align: center;background-color: black; color:white;">Edit</td>
 		</tr>
-		<tr>
-			<?php
-			$connection = mysqli_connect("localhost","root","","myDatabase");
-
-			if (!$connection)
-			{
-				echo "Database connection failed";
-			}
-
-			$retrieve = mysqli_query($connection, "SELECT * FROM `auditreport`");
-
-			?>
-
-			<?php
-			while ($row = mysqli_fetch_array($retrieve)) {
-				?>
+			<?php while($row =mysqli_fetch_array($search_result)):?>
 				<tr>
-				<td><?=$row['Audit_id'];?></td>
-				<td><?=$row['report_id'];?></td>
-				<td><?=$row['Audit_name'];?></td>
-				<td><?=$row['Audit_date'];?></td>
-				<td><?=$row['Audit_result'];?></td>
-				<td><a class="editbtn" href="editauditreport.php?Audit_id=<?php echo $row["Audit_id"]; ?>">Edit</a></td>
-			</tr>
-				<?php
-			}
-			?>
-		</tr>
-	</table>
+                    <td><?php echo $row['Audit_id'];?></td>
+                    <td><?php echo $row['report_id'];?></td>
+                    <td><?php echo $row['Audit_name'];?></td>
+                    <td><?php echo $row['Audit_date'];?></td>
+					<td><?php echo $row['Audit_result'];?></td>
+					<td><a class="editbtn" href="editauditreport.php?Audit_id=<?php echo $row["Audit_id"]; ?>">Edit</a></td>
+                </tr>
+				<?php endwhile;?>
+			</table>
+			
 <!--FORM-->
 
 <!-- 3. FOOTER-->

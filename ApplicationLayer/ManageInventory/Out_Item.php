@@ -2,7 +2,7 @@
 require_once '../../BusinessServiceLayer/controller/itemController.php';
 
 $viewOut = new itemController();	
-
+//Barang Keluar//
 ?>
 
 <head>
@@ -61,6 +61,7 @@ ul {
 		  margin: 0;
 		  padding: 0;
 		  overflow: hidden;
+      width:143%;
 		  background-color: #333;
 		}
 
@@ -173,14 +174,10 @@ body{ background-color: #7EDADB }
 <!--COLUMN 1-->
  <div class="column1">
   <div>
-  <center><button class="btn success"><a href="In_Item.php">In-Item</a></button>
-          <button class="btn active">Out-Item</button>
-		  <div class="dropdown">
-          <button class="btn success" style="color:blue;text-decoration:underline;">More</button>
-          <div class="dropdown-content">
-          <a href="add_Item.php">Add Item</a>
-          <a href="delete_Item.php">Delete Item</a>
-          </div>
+  <center>
+    <button class="btn success"><a href="In_Item.php" style="text-decoration: none;">In-Item</a></button>
+          <button class="btn active"><a href="Out_Item.php" style="text-decoration: none;">Out-Item</a></button>
+          <button class="btn success"><a href="add_Item.php" style="text-decoration: none;">Add Item</a></button>
   </center>
 </div>
 

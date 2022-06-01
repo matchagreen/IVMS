@@ -11,9 +11,10 @@
 <!DOCTYPE html>
 <html>
 <style type="text/css">
+  /*test github tee*/
 	/*kotak putih kat tengah interface*/
 	.box{
-    height: 300px;
+    height: 500px;
     width: 750px;
     margin: auto;
     background-color: white;
@@ -81,9 +82,8 @@ margin: 0;}
     background-color: #508585;
     height: 50px;
     padding: 2px 25px 7px;
-    width: 1290px;
-    top: 650px;
-        left: 7px;
+    width:100%;
+        bottom:0;
   }
   /*utk button yg digunakan*/
 .button {
@@ -110,8 +110,8 @@ h2{font-family: Myriad Pro Light;}
 .column1 {
 		  background-color: white;
 		  margin-left: 0px; margin-right: 5px; margin-top: 10px;
-		  float: left;
-		  width:1290px;
+
+		  width:100%;
 		  padding: 10px 25px 7px;
 		  height: 50px;
 		}
@@ -171,7 +171,7 @@ h2{font-family: Myriad Pro Light;}
           <tr><td></td></tr>
           <tr>
             <td colspan="3">
-              <label>Report ID: </label>
+              <label>Report Title: </label>
               <input type="text" name="report_id"></td>
           </tr>
           <tr>
@@ -181,8 +181,13 @@ h2{font-family: Myriad Pro Light;}
           </tr>
           <tr>
             <td colspan="3">
-              <label>Date: </label>
-              <input type="date" name="reportdate"></td>
+              <label>Start Date: </label>
+              <input type="date" name="reportstartdate"></td>
+          </tr>
+          <tr>
+            <td>
+              <label>End Date: </label>
+              <input type="date" name="reportenddate"></td>
           </tr>
           <tr>
       <br><br>

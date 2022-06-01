@@ -193,6 +193,7 @@ h2{font-family: Myriad Pro Light;}
 				<th>Date Booking</th>
 				<th>Booking Time</th>
 				<th>Pickup Date</th>
+				<th>Functions</th>
 				
 			</tr>
 			<?php 
@@ -215,11 +216,14 @@ $row= mysqli_fetch_array($retrive);
                     <tr>
                     <td><?= $row['BookingID'];?></td>
                     <td><?= $row['ItemID'];?></td>
-										<td><?= $row['id'];?></td>
+					<td><?= $row['id'];?></td>
                     <td><?= $row['ItemQuantity'];?></td>
                     <td><?= $row['DateBooking'];?></td>
                     <td><?= $row['BookingTime'];?></td>
                     <td><?= $row['PickUpDate'];?></td>
+					<td> <a href ="updateBooking.php?update=<?php echo $row['BookingID'];?>" class="btn btn-info">Update</a> 
+				    <a href ="deleteBooking.php?delete=<?php echo $row['BookingID'];?>" class="btn btn-danger">Delete</a> 
+					</td>
                     </tr>
                 <?php
                 }
@@ -229,4 +233,3 @@ $row= mysqli_fetch_array($retrive);
 			
 </head>
 </html>
-
