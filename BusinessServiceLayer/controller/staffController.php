@@ -91,7 +91,7 @@ class staffController
 			if (empty($_POST["officeFax"])) {
 				$officeFaxErr = "Office fax is required.";
 			} else {
-				$officeTel = input_data($_POST["officeFax"]);
+				$officeFax = input_data($_POST["officeFax"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $officeFax)) {
 					$officeFaxErr = "Only numeric values are allowed.";
