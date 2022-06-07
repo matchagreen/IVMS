@@ -7,15 +7,7 @@ class staffController
 	//add staff information
 	function add()
 	{
-
-		function input_data($data)
-		{
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
-
+		$controller = new staffController();
 		$nameErr = $idErr = $groupsListErr = $officeFaxErr = $officeTelErr = $emailErr = $addressErr = $phoneErr = "";
 		$name = $id = $groupsList = $officeFax = $officeTel = $email = $address = $phone = "";
 		$_SESSION['success'] = $_SESSION['nameErr'] = $_SESSION['idErr'] = $_SESSION['groupsListErr'] = $_SESSION['officeFaxErr'] = $_SESSION['officeTelErr'] = $_SESSION['emailErr'] = $_SESSION['addressErr'] = $_SESSION['phoneErr'] = '';
@@ -28,7 +20,7 @@ class staffController
 			if (empty($_POST["name"])) {
 				$nameErr = "Name is required";
 			} else {
-				$name = input_data($_POST["name"]);
+				$name = $controller->input_data($_POST["name"]);
 				// check if name only contains letters and whitespace  
 				if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
 					$nameErr = "Only alphabets and white space are allowed";
@@ -37,7 +29,7 @@ class staffController
 			if (empty($_POST["id"])) {
 				$idErr = "ID is required";
 			} else {
-				$id = input_data($_POST["id"]);
+				$id = $controller->input_data($_POST["id"]);
 				// check if mobile no is well-formed  
 				if (preg_match("[\W]", $id)) {
 					$idErr = "No special characters are allowed.";
@@ -46,7 +38,7 @@ class staffController
 			if (empty($_POST["phone"])) {
 				$phoneErr = "Phone Number is required";
 			} else {
-				$phone = input_data($_POST["phone"]);
+				$phone = $controller->input_data($_POST["phone"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $phone)) {
 					$phoneErr = "Only numeric values are allowed.";
@@ -60,7 +52,7 @@ class staffController
 			if (empty($_POST["address"])) {
 				$addressErr = "Address is required";
 			} else {
-				$address = input_data($_POST["address"]);
+				$address = $controller->input_data($_POST["address"]);
 				// check if mobile no is well-formed  
 				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $address)) {
 					$addressErr = "No special characters are allowed.";
@@ -69,7 +61,7 @@ class staffController
 			if (empty($_POST["email"])) {
 				$emailErr = "Email is required.";
 			} else {
-				$email = input_data($_POST["email"]);
+				$email = $controller->input_data($_POST["email"]);
 				// check that the e-mail address is well-formed  
 				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$emailErr = "Invalid email format";
@@ -78,7 +70,7 @@ class staffController
 			if (empty($_POST["officeTel"])) {
 				$officeTelErr = "Office Telephone Number is required.";
 			} else {
-				$officeTel = input_data($_POST["officeTel"]);
+				$officeTel = $controller->input_data($_POST["officeTel"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $officeTel)) {
 					$officeTelErr = "Only numeric values are allowed.";
@@ -91,7 +83,7 @@ class staffController
 			if (empty($_POST["officeFax"])) {
 				$officeFaxErr = "Office fax is required.";
 			} else {
-				$officeFax = input_data($_POST["officeFax"]);
+				$officeTel = $controller->input_data($_POST["officeFax"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $officeFax)) {
 					$officeFaxErr = "Only numeric values are allowed.";
@@ -104,7 +96,7 @@ class staffController
 			if (empty($_POST["groupsList"])) {
 				$groupsListErr = "Group List is required";
 			} else {
-				$groupsList = input_data($_POST["groupsList"]);
+				$groupsList = $controller->input_data($_POST["groupsList"]);
 				// check if mobile no is well-formed  
 				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $groupsList)) {
 					$groupsListErr = "No special characters are allowed.";
@@ -132,13 +124,8 @@ class staffController
 	//delete staff information
 	function delete()
 	{
-		function input_data3($data)
-		{
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
+		$controller = new staffController();
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$delete = new staffModel();
 
@@ -147,7 +134,7 @@ class staffController
 			if (empty($_POST["id"])) {
 				$idErr = "ID is required";
 			} else {
-				$id = input_data3($_POST["id"]);
+				$id = $controller->input_data($_POST["id"]);
 				// check if mobile no is well-formed  
 				if (preg_match("[\W]", $id)) {
 					$idErr = "No special characters are allowed.";
@@ -168,13 +155,7 @@ class staffController
 	function view()
 	{
 
-		function input_data4($data)
-		{
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
+		$controller = new staffController();
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$view = new staffModel();
 
@@ -183,7 +164,7 @@ class staffController
 			if (empty($_POST["id"])) {
 				$idErr = "ID is required";
 			} else {
-				$id = input_data4($_POST["id"]);
+				$id = $controller->input_data($_POST["id"]);
 				// check if mobile no is well-formed  
 				if (preg_match("[\W]", $id)) {
 					$idErr = "No special characters are allowed.";
@@ -213,19 +194,14 @@ class staffController
 	//edit staff information
 	function edit()
 	{
+		$controller = new staffController();
+
 
 
 		$nameErr = $idErr = $groupsListErr = $officeFaxErr = $officeTelErr = $emailErr = $addressErr = $phoneErr = "";
 		$name = $id = $groupsList = $officeFax = $officeTel = $email = $address = $phone = "";
 		$_SESSION['success'] = $_SESSION['nameErr'] = $_SESSION['idErr'] = $_SESSION['groupsListErr'] = $_SESSION['officeFaxErr'] = $_SESSION['officeTelErr'] = $_SESSION['emailErr'] = $_SESSION['addressErr'] = $_SESSION['phoneErr'] = '';
 
-		function input_data2($data)
-		{
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$edit = new staffModel();
@@ -233,7 +209,7 @@ class staffController
 			if (empty($_POST["name"])) {
 				$nameErr = "Name is required";
 			} else {
-				$name = input_data2($_POST["name"]);
+				$name = $controller->input_data($_POST["name"]);
 				// check if name only contains letters and whitespace  
 				if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
 					$nameErr = "Only alphabets and white space are allowed";
@@ -242,7 +218,7 @@ class staffController
 			if (empty($_POST["id"])) {
 				$idErr = "ID is required";
 			} else {
-				$id = input_data2($_POST["id"]);
+				$id = $controller->input_data($_POST["id"]);
 				// check if mobile no is well-formed  
 				if (preg_match("[\W]", $id)) {
 					$idErr = "No special characters are allowed.";
@@ -251,7 +227,7 @@ class staffController
 			if (empty($_POST["phone"])) {
 				$phoneErr = "Phone Number is required";
 			} else {
-				$phone = input_data2($_POST["phone"]);
+				$phone = $controller->input_data($_POST["phone"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $phone)) {
 					$phoneErr = "Only numeric values are allowed.";
@@ -265,7 +241,7 @@ class staffController
 			if (empty($_POST["address"])) {
 				$addressErr = "Address is required";
 			} else {
-				$address = input_data2($_POST["address"]);
+				$address = $controller->input_data($_POST["address"]);
 				// check if mobile no is well-formed  
 				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $address)) {
 					$addressErr = "No special characters are allowed.";
@@ -274,7 +250,7 @@ class staffController
 			if (empty($_POST["email"])) {
 				$emailErr = "Email is required.";
 			} else {
-				$email = input_data2($_POST["email"]);
+				$email = $controller->input_data($_POST["email"]);
 				// check that the e-mail address is well-formed  
 				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$emailErr = "Invalid email format";
@@ -283,7 +259,7 @@ class staffController
 			if (empty($_POST["officeTel"])) {
 				$officeTelErr = "Office Telephone Number is required.";
 			} else {
-				$officeTel = input_data2($_POST["officeTel"]);
+				$officeTel = $controller->input_data($_POST["officeTel"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $officeTel)) {
 					$officeTelErr = "Only numeric values are allowed.";
@@ -296,7 +272,7 @@ class staffController
 			if (empty($_POST["officeFax"])) {
 				$officeFaxErr = "Office fax is required.";
 			} else {
-				$officeFax = input_data2($_POST["officeFax"]);
+				$officeFax = $controller->input_data($_POST["officeFax"]);
 				// check if mobile no is well-formed  
 				if (!preg_match("/^[0-9]*$/", $officeFax)) {
 					$officeFaxErr = "Only numeric values are allowed.";
@@ -309,7 +285,7 @@ class staffController
 			if (empty($_POST["groupsList"])) {
 				$groupsListErr = "Group List is required";
 			} else {
-				$groupsList = input_data2($_POST["groupsList"]);
+				$groupsList = $controller->input_data($_POST["groupsList"]);
 				// check if mobile no is well-formed  
 				if (!preg_match('/^[a-zA-Z0-9-., ]+$/', $groupsList)) {
 					$groupsListErr = "No special characters are allowed.";
@@ -335,5 +311,12 @@ class staffController
 			}
 			session_destroy();
 		}
+	}
+	function input_data($data)
+	{
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
 	}
 }
