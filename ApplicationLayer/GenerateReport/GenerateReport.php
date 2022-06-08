@@ -11,7 +11,6 @@
 <!DOCTYPE html>
 <html>
 <style type="text/css">
-  /*test github tee*/
 	/*kotak putih kat tengah interface*/
 	.box{
     height: 500px;
