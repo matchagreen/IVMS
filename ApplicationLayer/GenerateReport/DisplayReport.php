@@ -1,42 +1,31 @@
-<?php
-  require_once '../../BusinessServiceLayer/controller/GenerateReportController.php';  
-
-  $add = new GenerateReportController();
-
-  if(isset($_POST['Submit']))
-  { 
-      $add->add();
-  }
-?>
 <!DOCTYPE html>
 <html>
 <style type="text/css">
-  /*test github tee*/
-	/*kotak putih kat tengah interface*/
-	.box{
-    height: 500px;
-    width: 750px;
-    margin: auto;
-    background-color: white;
-    margin-top: 35px;
-    border-radius: 15px;
+body{
+    background-color:#7EDADB;
 }
-/*guna untuk table*/
-table{
-  width: 65%;
-    margin-top: -50px;
-    margin-left: auto;
-    margin-right: auto;
+table { /*guna untuk table*/
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 100%;}
+  td{
+  	border: 1px solid black;
+  	border-collapse: collapse;
+  	text-align: center;
+  	padding: 8px;
+  	background-color: white;
 }
-td{
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 10px;
-  text-align: center;
-  width: 40%;
+  	th {
+  	border: 1px solid black;
+  	border-collapse: collapse;
+  	text-align: center;
+  	padding: 8px;
+  	background:black;
+	color: white;
+  
 }
 
-  	/*NAVIGATION BAR*/
 ul {
 		  list-style-type: none;
 		  margin: 0;
@@ -65,49 +54,16 @@ ul {
 		.activeNav {
 		  background-color: #7EDADB;
 		}
-body{ background-color: #7EDADB; 
-margin: 0;}
-/*guna untuk header*/
-.header{
-		/*font*/
-		color:white;  font-family:Stencil; font-size: 26px; text-align: center;
-		/*display*/
-		background-color: #508585;
-		height: 120px;
-		padding: 2px 25px 7px;
-	}
-  /*guna untuk footer*/
-.footer{
+        .footer{
         position: absolute;
     background-color: #508585;
     height: 50px;
     padding: 2px 25px 7px;
     width:100%;
         bottom:0;
+        left:0;
   }
-  /*utk button yg digunakan*/
-.button {
-  background-color: #508585;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  font-family: Myriad Pro Light;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-/*UNTUK TAJUK MODULE*/
-h2{font-family: Myriad Pro Light;}
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*background nav bar utk generate report*/
-.column1 {
+  .column1 {
 		  background-color: white;
 		  margin-left: 0px; margin-right: 5px; margin-top: 10px;
 
@@ -134,15 +90,24 @@ h2{font-family: Myriad Pro Light;}
   background-color: #508585;
   color: white;
 }
-
-
-
+    .body-container{
+        width:70%;
+        margin:auto;
+       
+    }
+    .header{
+        text-align:center;
+    }
+    .back-container{
+      padding-top:5%;
+      text-align:center;
+    }
 </style>
 <head>
 	<title>Generate Report</title>
 	<div class="header" >
 	<h1 >INVENTORY MANAGEMENT SYSTEM</h1>
-	</div>
+	</div></head>
 	<body>
 <ul>
   <li><a href="http://localhost/ivms/login/Admin%20login/h.php">HOME</a></li>
@@ -163,49 +128,48 @@ h2{font-family: Myriad Pro Light;}
           <br><br>
       </div>
     </div>
+   
+<div class="body-container">
+<?php 
+extract($_POST);
+?>
+<div class="header"><h1><?php echo $report_title; ?>(<?php echo $reportstartdate; ?> To <?php echo $reportenddate; ?>)</h1></div>
+<table>
+    <tr>
+<th>Booking ID</th>
+<th>Item ID</th>
+<th>ID</th>
+<th>Item Quantity</th>
+<th>Date Booking</th>
+<th>Booking Time</th>
+<th>Pick Up Date</th>
+</tr>
+<?php 
+$connection = mysqli_connect("localhost","root","","myDatabase");
+$result = mysqli_query($connection, "SELECT * FROM booking WHERE DateBooking between '$reportstartdate' AND '$reportenddate'");
 
-    <br><br><br><br>
-<div class="box">
-  <form action="DisplayReport.php" method="post">
-    <table>
-          <tr><td></td></tr>
-          <tr>
-            <td colspan="3">
-              <label>Report Title: </label>
-              <input type="text" name="report_title" required></td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <label>Admin ID: </label>
-              <?php 
-              echo $_SESSION['Admin_ID'];
-              ?>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <label>Start Date: </label>
-              <input type="date" name="reportstartdate" required></td>
-          </tr>
-          <tr>
-            <td>
-              <label>End Date: </label>
-              <input type="date" name="reportenddate" required></td>
-          </tr>
-          <tr>
-      <br><br>
-      <td colspan="3" style="text-align: center; padding-top: 10px;">
-      <input class="button" type="submit" name="Submit" id="Submit" value="Submit">
-      </td>
-    </tr>
-  </table>
-</form>
-            
-</div>
-<br><br>
-<div class="footer">
+
+            while($row = mysqli_fetch_array($result))
+                {
+            ?>
+                    <tr>
+                    <td><?php echo $row['BookingID'];?></td>
+                    <td><?php echo $row['ItemID'];?></td>
+					<td><?php echo $row['id'];?></td>
+                    <td><?php echo $row['ItemQuantity'];?></td>
+					<td><?php echo $row['DateBooking'];?></td>
+                    <td><?php echo $row['BookingTime'];?></td>
+                    <td><?php echo $row['PickUpDate'];?></td>
+                    </tr>
+                <?php
+                }
+                
+                ?>
+            </table>
+            <div class="back-container">
+            <a href="http://localhost/IVMS/ApplicationLayer/GenerateReport/GenerateReport.php">Back</a>
+          </div>
+            <div class="footer">
 <p style="color:white;margin-top:25px;">2021 &#169; BING'S CORP</p>
 </div>
-</body>
-</form>
-</head>
-</html>
+</div>
