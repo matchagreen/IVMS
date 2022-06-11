@@ -16,10 +16,16 @@ $date = $_POST["reportdate"];
 $status = $_POST['status'];
 
 
+if(empty($auditID) || empty($reportID) || empty($description) || empty($date) || empty($status)){	
+			
+			echo "<font color='red'> Empty field, plase try again.</font><br/>";
+			
+	} else {
+
 $audit= new auditmodel();
 $req = $audit->addaudit($auditID, $reportID, $description, $date, $status);
 
-}
+}}
 
 //To retrieve all audit report information from AuditReportModel class.
 function viewAll(){
